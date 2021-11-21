@@ -4,7 +4,6 @@ import telebot
 import threading
 import schedule
 import time
-import os
 import psycopg2
 from config import *
 
@@ -59,12 +58,12 @@ def keyboard():
 
 # telegram bot
 bot = telebot.TeleBot(BOT_TOKEN)
-
+# запрашиваю из базы данных список юзеров
 db_object.execute(f"SELECT id FROM users")
 joinedUser = db_object.fetchone()
 
 
-# собираю список юзеров в отдельном файле
+# собираю список юзеров в базе данных
 @bot.message_handler(commands=['start'])
 def start(message):
     id = message.chat.id
@@ -118,7 +117,7 @@ def get_text_messages(message):
         markup = keyboard()
         bot.send_message(message.chat.id, "Напишите: ку ИЛИ график. ИЛИ нажмите на кнопку ", reply_markup=markup)
 
-# функция проверяет значения индекса Q и присылает пользователся уведомление при Q >= 6 !!!пока отладка >0
+# функция проверяет значения индекса Q и присылает пользователся уведомление при Q >= 6
 def AuroraPossible(joinedUser):
     Q = getQ()
     if Q >= 6:
