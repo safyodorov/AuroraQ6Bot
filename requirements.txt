@@ -2,8 +2,6 @@ pipenv
 pyparsing==2.2.0
 pyTelegramBotAPI==4.2.0
 requests
-virtualenv
-virtualenv-clone
 schedule==1.1.0
 Pillow==8.4.0
 psycopg2==2.9.2
