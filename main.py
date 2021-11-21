@@ -9,7 +9,8 @@ import psycopg2
 from config import *
 
 # база данных телеграм пользователей
-
+db_connection = psycopg2.connect(DB_URI, sslmode="require")
+db_object = db_connection.cursor()
 
 # функция парсит картинку, сохраняет ей, обрезает и сохраняет сновая под тем же именем
 def getImage():
@@ -58,6 +59,7 @@ def keyboard():
 
 # telegram bot
 bot = telebot.TeleBot(BOT_TOKEN)
+
 joinedFile = open('joined.txt', 'r')
 joinedUser = set()
 for line in joinedFile:
@@ -67,10 +69,18 @@ joinedFile.close()
 # собираю список юзеров в отдельном файле
 @bot.message_handler(commands=['start'])
 def start(message):
+    id = message.from_user.id
+    username = message.from_user.username
     if not str(message.chat.id) in joinedUser:
          file = open('joined.txt', 'a+')
          file.write(str(message.chat.id) + '\n')
          file.close()
+
+    db_object.execute(f"SELECT id FROM users WHERE id = {id}")
+    result = db_object.fetchone()
+    if not result:
+        db_object.execute("INSERT INTO users(id, username, messages), VALUES(%s, %s, %s)", (id, username, 0))
+        db_connection.commit()
 
     markup = keyboard()
     bot.send_message(message.chat.id, text="Привет, чем могу помочь?", reply_markup=markup)
