@@ -60,25 +60,19 @@ def keyboard():
 # telegram bot
 bot = telebot.TeleBot(BOT_TOKEN)
 
-joinedFile = open('joined.txt', 'r')
-joinedUser = set()
-for line in joinedFile:
-    joinedUser.add(line.strip())
-joinedFile.close()
+db_object.execute(f"SELECT id FROM users")
+joinedUser = db_object.fetchone()
+
 
 # собираю список юзеров в отдельном файле
 @bot.message_handler(commands=['start'])
 def start(message):
     id = message.chat.id
     username = message.from_user.username
-    if not str(message.chat.id) in joinedUser:
-         file = open('joined.txt', 'a+')
-         file.write(str(message.chat.id) + '\n')
-         file.close()
 
     db_object.execute(f"SELECT id FROM users WHERE id = {id}")
     result = db_object.fetchone()
-    print(result)
+
     if not result:
         db_object.execute("INSERT INTO users(id, username, messages) VALUES(%s, %s, %s)", (id, username, 0))
         db_connection.commit()
@@ -106,7 +100,7 @@ def callback_worker(call):
                                                '– график изменения Q-индекса за последние сутки.\n'
                                                '\n'
                                                'Главная особенность этого бота:\n'
-                                               'Уведомление пользователей о значениях Q-индекса равном 7 и более единицам. '
+                                               'Уведомление пользователей о значениях Q-индекса равном 6 и более единицам. '
                                                'Именно при таких значениях возможно наблюдение северного сияния '
                                                'на широте 56° (Иваново, Москва, Нижний Новгород, Казань, Екатеринбург, Новосибирск)')
 
