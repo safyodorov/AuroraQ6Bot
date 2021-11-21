@@ -69,7 +69,7 @@ joinedFile.close()
 # собираю список юзеров в отдельном файле
 @bot.message_handler(commands=['start'])
 def start(message):
-    id = message.from_user.id
+    id = message.chat.id
     username = message.from_user.username
     if not str(message.chat.id) in joinedUser:
          file = open('joined.txt', 'a+')
