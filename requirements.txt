@@ -1,4 +1,4 @@
-pipenv==11.8.0
+pipenv
 pyparsing==2.2.0
 pyTelegramBotAPI==4.2.0
 requests
