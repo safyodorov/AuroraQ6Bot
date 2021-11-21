@@ -89,7 +89,7 @@ def callback_worker(call):
         getImage()
         bot.send_photo(call.message.chat.id, open('Q-index.png', 'rb'))
     elif call.data == "about":
-        bot.send_message(call.message.chat.id, 'AuroraQ7Bot v.1\n'
+        bot.send_message(call.message.chat.id, 'AuroraQ6Bot v.1\n'
                                                '\n'
                                                'Бот получает онлайн-данные с магнитометров, расположенных в городе Кируна (Швеция)\n'
                                                'сайт: https://www2.irf.se/Observatory/?link[Magnetometers]=Data/\n'
