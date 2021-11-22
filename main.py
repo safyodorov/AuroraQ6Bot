@@ -1,3 +1,4 @@
+import os
 from PIL import Image
 import requests
 import telebot
@@ -5,9 +6,9 @@ import threading
 import schedule
 import time
 import psycopg2
-from config import *
 
 # база данных телеграм пользователей
+DB_URI = os.environ['DATABASE_URL']
 db_connection = psycopg2.connect(DB_URI, sslmode="require")
 db_object = db_connection.cursor()
 
@@ -55,13 +56,12 @@ def keyboard():
     markup.add(telebot.types.InlineKeyboardButton(text='About', callback_data="about"))
     return markup
 
-
 # telegram bot
+BOT_TOKEN = os.environ["BOT_TOKEN"]
 bot = telebot.TeleBot(BOT_TOKEN)
 # запрашиваю из базы данных список юзеров
 db_object.execute(f"SELECT id FROM users")
 joinedUser = db_object.fetchone()
-
 
 # собираю список юзеров в базе данных
 @bot.message_handler(commands=['start'])
@@ -124,7 +124,7 @@ def AuroraPossible(joinedUser):
         for user in joinedUser:
             bot.send_message(user, "Внимание значение Q велико, возможно Северное сияние. Q-индекс: "+str(Q))
 
-# этот момент до конца не понимаю, но код работает!
+# уведомления
 def notifications(joinedUser):
     schedule.every(15).minutes.do(AuroraPossible, joinedUser)
     while True:
