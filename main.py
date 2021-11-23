@@ -6,7 +6,13 @@ import telebot
 import threading
 import schedule
 import time
-import psycopg2
+
+aurora = {0: 'Уведомления отключены',
+          5: '. Cияние видно на широте 62° (г. Петрозаводск).',
+          6: '. Сияние видно на широте 60° (г. Санкт-Петербург).',
+          7: '. Сияние видно на широте 56° (Иваново, Москва, Нижний Новгород, Казань, Екатеринбург, Новосибирск).',
+          8: '. Сияние видно на широте 52° (Самара, Курск, Липецк).',
+          9: '. Сияние видно на широте 50°–45° (Крым, Кавказ).'}
 
 # клавиатура telegram вывел отдельно
 def keyboard():
@@ -69,14 +75,10 @@ def callback_worker(call):
     elif call.data == "notifications":
         markup = keyboardnotes()
         bot.send_message(call.message.chat.id, "Хорошо", reply_markup=markup)
-    elif call.data == "qset0":
-        db_object.execute(f"UPDATE users SET qset = 0 WHERE id = {id}")
-        db_connection.commit()
-        bot.send_message(call.message.chat.id, 'Уведомления отключены')
     else:
         data = call.data
         id_write(id, data)
-        bot.send_message(call.message.chat.id, 'Буду присылать уведомления, когда Q-индекс будет >='+data+'. Cияние видно на широте 62° (г. Петрозаводск).')
+        bot.send_message(call.message.chat.id, 'Буду присылать уведомления, когда Q-индекс будет >='+data+aurora[data])
 
 @bot.message_handler(content_types=['text'])
 
