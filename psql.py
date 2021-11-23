@@ -8,17 +8,10 @@ db_object = db_connection.cursor()
 
 def get_users():
 # запрашиваю из базы данных список юзеров
-    db_object.execute(f"SELECT id FROM users WHERE qset = 5")
-    joinedUser5 = db_object.fetchone()
-    db_object.execute(f"SELECT id FROM users WHERE qset = 6")
-    joinedUser6 = db_object.fetchone()
-    db_object.execute(f"SELECT id FROM users WHERE qset = 7")
-    joinedUser7 = db_object.fetchone()
-    db_object.execute(f"SELECT id FROM users WHERE qset = 8")
-    joinedUser8 = db_object.fetchone()
-    db_object.execute(f"SELECT id FROM users WHERE qset = 9")
-    joinedUser9 = db_object.fetchone()
-    joinedUsers = [joinedUser5, joinedUser6, joinedUser7, joinedUser8, joinedUser9]
+    joinedUsers = []
+    for i in range(5, 10):
+        db_object.execute(f"SELECT id FROM users WHERE qset = i")
+        joinedUsers[i-4] = db_object.fetchone()
     return (joinedUsers)
 
 def id_check(id, username):
