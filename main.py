@@ -8,11 +8,6 @@ import schedule
 import time
 import psycopg2
 
-# база данных телеграм пользователей
-DB_URI = os.environ['DATABASE_URL']
-db_connection = psycopg2.connect(DB_URI, sslmode="require")
-db_object = db_connection.cursor()
-
 # клавиатура telegram вывел отдельно
 def keyboard():
     markup = telebot.types.InlineKeyboardMarkup()

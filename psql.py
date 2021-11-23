@@ -10,7 +10,7 @@ def get_user():
 # запрашиваю из базы данных список юзеров
     db_object.execute(f"SELECT id FROM users WHERE qset = 5")
     joinedUser5 = db_object.fetchone()
-    b_object.execute(f"SELECT id FROM users WHERE qset = 6")
+    db_object.execute(f"SELECT id FROM users WHERE qset = 6")
     joinedUser6 = db_object.fetchone()
     db_object.execute(f"SELECT id FROM users WHERE qset = 7")
     joinedUser7 = db_object.fetchone()
