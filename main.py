@@ -1,6 +1,6 @@
 from get_image import getImage
 from get_q_index import getQ
-from psql import get_user, id_check, id_write
+from psql import get_users, id_check, id_write
 import os
 import telebot
 import threading
@@ -34,7 +34,7 @@ def keyboardnotes():
 BOT_TOKEN = os.environ["BOT_TOKEN"]
 bot = telebot.TeleBot(BOT_TOKEN)
 
-joinedUser5, joinedUser6, joinedUser7, joinedUser8, joinedUser9, joinedUser = get_user()
+joinedUsers = get_users()
 
 @bot.message_handler(commands=['start'])
 def start(message):
@@ -93,17 +93,17 @@ def get_text_messages(message):
         bot.send_message(message.chat.id, "Напишите: ку ИЛИ график. ИЛИ нажмите на кнопку ", reply_markup=markup)
 
 # функция проверяет значения индекса Q и присылает уведомления в зависимости от выбора пользователя
-def AuroraPossible(joinedUser):
+def AuroraPossible(joinedUsers):
     Q = getQ()
     for i in range(1, 6):
         if Q >= i+1:
             if joinedUser[i]:
-                for user in joinedUser[i]:
+                for user in joinedUsers[i]:
                     bot.send_message(user, "Внимание значение Q велико, возможно Северное сияние. Q-индекс: "+str(Q))
 
 # уведомления
-def notifications(joinedUser):
-    schedule.every(15).minutes.do(AuroraPossible, joinedUser)
+def notifications(joinedUsers):
+    schedule.every(15).minutes.do(AuroraPossible, joinedUsers)
 
     while True:
         schedule.run_pending()
@@ -111,7 +111,7 @@ def notifications(joinedUser):
 
 if __name__ == '__main__':
     t1 = threading.Thread(target=bot.polling)
-    t2 = threading.Thread(target=notifications, args=(joinedUser,))
+    t2 = threading.Thread(target=notifications, args=(joinedUsers,))
     t1.start()
     t2.start()
     t1.join()
