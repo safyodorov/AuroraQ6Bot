@@ -1,5 +1,6 @@
 from get_image import getImage
 from get_q_index import getQ
+from psql import get_user, id_check, id_write
 import os
 import telebot
 import threading
@@ -36,30 +37,14 @@ def keyboardnotes():
 BOT_TOKEN = os.environ["BOT_TOKEN"]
 bot = telebot.TeleBot(BOT_TOKEN)
 
-# запрашиваю из базы данных список юзеров
-db_object.execute(f"SELECT id FROM users WHERE qset = 5")
-joinedUser5 = db_object.fetchone()
-db_object.execute(f"SELECT id FROM users WHERE qset = 6")
-joinedUser6 = db_object.fetchone()
-db_object.execute(f"SELECT id FROM users WHERE qset = 7")
-joinedUser7 = db_object.fetchone()
-db_object.execute(f"SELECT id FROM users WHERE qset = 8")
-joinedUser8 = db_object.fetchone()
-db_object.execute(f"SELECT id FROM users WHERE qset = 9")
-joinedUser9 = db_object.fetchone()
+joinedUser5, joinedUser6, joinedUser7, joinedUser8, joinedUser9 = get_user()
 
-# собираю список юзеров в базе данных
 @bot.message_handler(commands=['start'])
 def start(message):
     id = message.chat.id
     username = message.from_user.username
 
-    db_object.execute(f"SELECT id FROM users WHERE id = {id}")
-    result = db_object.fetchone()
-
-    if not result:
-        db_object.execute("INSERT INTO users(id, username, qset) VALUES(%s, %s, %s)", (id, username, 0))
-        db_connection.commit()
+    id_check(id, username)
 
     markup = keyboard()
     bot.send_message(message.chat.id, text="Привет, чем могу помочь?", reply_markup=markup)
@@ -93,26 +78,11 @@ def callback_worker(call):
         db_object.execute(f"UPDATE users SET qset = 0 WHERE id = {id}")
         db_connection.commit()
         bot.send_message(call.message.chat.id, 'Уведомления отключены')
-    elif call.data == "qset5":
-        db_object.execute(f"UPDATE users SET qset = 5 WHERE id = {id}")
-        db_connection.commit()
+    else:
+        data = call.data
+        id_write(id, data)
+
         bot.send_message(call.message.chat.id, 'Буду присылать уведомления, когда Q-индекс будет >=5. Cияние видно на широте 62° (г. Петрозаводск).')
-    elif call.data == "qset6":
-        db_object.execute(f"UPDATE users SET qset = 6 WHERE id = {id}")
-        db_connection.commit()
-        bot.send_message(call.message.chat.id, 'Буду присылать уведомления, когда Q-индекс будет >=6. Сияние видно на широте 60° (г. Санкт-Петербург).')
-    elif call.data == "qset7":
-        db_object.execute(f"UPDATE users SET qset = 7 WHERE id = {id}")
-        db_connection.commit()
-        bot.send_message(call.message.chat.id, 'Буду присылать уведомления, когда Q-индекс будет >=7. Сияние видно на широте 56° (Иваново, Москва, Нижний Новгород, Казань, Екатеринбург, Новосибирск).')
-    elif call.data == "qset8":
-        db_object.execute(f"UPDATE users SET qset = 8 WHERE id = {id}")
-        db_connection.commit()
-        bot.send_message(call.message.chat.id, 'Буду присылать уведомления, когда Q-индекс будет >=8. Сияние видно на широте 52° (Самара, Курск, Липецк).')
-    elif call.data == "qset9":
-        db_object.execute(f"UPDATE users SET qset = 9 WHERE id = {id}")
-        db_connection.commit()
-        bot.send_message(call.message.chat.id, 'Буду присылать уведомления, когда Q-индекс будет >=9. Сияние видно на широте 50°–45° (Крым, Кавказ).')
 
 @bot.message_handler(content_types=['text'])
 
