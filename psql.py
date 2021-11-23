@@ -18,7 +18,8 @@ def get_user():
     joinedUser8 = db_object.fetchone()
     db_object.execute(f"SELECT id FROM users WHERE qset = 9")
     joinedUser9 = db_object.fetchone()
-    return (joinedUser5, joinedUser6, joinedUser7, joinedUser8, joinedUser9)
+    joinedUser = [joinedUser5, joinedUser6, joinedUser7, joinedUser8, joinedUser9]
+    return (joinedUser5, joinedUser6, joinedUser7, joinedUser8, joinedUser9, joinedUser)
 
 def id_check(id, username):
     db_object.execute(f"SELECT id FROM users WHERE id = {id}")

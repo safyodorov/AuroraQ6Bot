@@ -27,7 +27,6 @@ def keyboardnotes():
     markup.add(telebot.types.InlineKeyboardButton(text='Не получать уведомления', callback_data='0'))
     for i in range(5, 10):
         markup.add(telebot.types.InlineKeyboardButton(text='Сообщать когда Q-индекс >='+str(i), callback_data=str(i)))
-
     markup.add(telebot.types.InlineKeyboardButton(text='About', callback_data="about"))
     return markup
 
@@ -35,7 +34,7 @@ def keyboardnotes():
 BOT_TOKEN = os.environ["BOT_TOKEN"]
 bot = telebot.TeleBot(BOT_TOKEN)
 
-joinedUser5, joinedUser6, joinedUser7, joinedUser8, joinedUser9 = get_user()
+joinedUser5, joinedUser6, joinedUser7, joinedUser8, joinedUser9, joinedUser = get_user()
 
 @bot.message_handler(commands=['start'])
 def start(message):
