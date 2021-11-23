@@ -7,8 +7,7 @@ import threading
 import schedule
 import time
 
-aurora = {'0': 'Уведомления отключены',
-          '5': '. Cияние видно на широте 62° (г. Петрозаводск).',
+aurora = {'5': '. Cияние видно на широте 62° (г. Петрозаводск).',
           '6': '. Сияние видно на широте 60° (г. Санкт-Петербург).',
           '7': '. Сияние видно на широте 56° (Иваново, Москва, Нижний Новгород, Казань, Екатеринбург, Новосибирск).',
           '8': '. Сияние видно на широте 52° (Самара, Курск, Липецк).',
@@ -78,7 +77,10 @@ def callback_worker(call):
     else:
         data = call.data
         id_write(id, data)
-        bot.send_message(call.message.chat.id, 'Буду присылать уведомления, когда Q-индекс будет >='+data+aurora[data])
+        if data == '0':
+            bot.send_message(call.message.chat.id, 'Уведомления отключены')
+        else:
+            bot.send_message(call.message.chat.id, 'Буду присылать уведомления, когда Q-индекс будет >=' + data + aurora[data])
 
 @bot.message_handler(content_types=['text'])
 
