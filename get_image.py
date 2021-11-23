@@ -1,3 +1,6 @@
+import requests
+from PIL import Image
+
 # функция парсит картинку, сохраняет её, обрезает и сохраняет снова под тем же именем
 def getImage():
     url = 'https://www2.irf.se/maggraphs/preliminary_k_index_last_24.png'
