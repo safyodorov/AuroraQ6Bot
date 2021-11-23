@@ -26,7 +26,7 @@ def keyboardnotes():
     markup = telebot.types.InlineKeyboardMarkup()
     markup.add(telebot.types.InlineKeyboardButton(text='Не получать уведомления', callback_data='0'))
     for i in range(5, 10):
-        markup.add(telebot.types.InlineKeyboardButton(text='Сообщать когда Q-индекс >= '+i, callback_data=i))
+        markup.add(telebot.types.InlineKeyboardButton(text='Сообщать когда Q-индекс >='+i, callback_data=str(i))
     markup.add(telebot.types.InlineKeyboardButton(text='About', callback_data="about"))
     return markup
 
