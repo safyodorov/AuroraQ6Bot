@@ -78,7 +78,7 @@ def callback_worker(call):
     else:
         data = call.data
         id_write(id, data)
-        bot.send_message(call.message.chat.id, 'Буду присылать уведомления, когда Q-индекс будет >='+data+aurora[data])
+        bot.send_message(call.message.chat.id, 'Буду присылать уведомления, когда Q-индекс будет >='+data+str(aurora[data]))
 
 @bot.message_handler(content_types=['text'])
 
