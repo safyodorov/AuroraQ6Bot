@@ -19,12 +19,12 @@ def keyboard():
 
 def keyboardnotes():
     markup = telebot.types.InlineKeyboardMarkup()
-    markup.add(telebot.types.InlineKeyboardButton(text='Не получать уведомления', callback_data="qset0"))
-    markup.add(telebot.types.InlineKeyboardButton(text='Сообщать когда Q-индекс >= 5', callback_data="qset5"))
-    markup.add(telebot.types.InlineKeyboardButton(text='Сообщать когда Q-индекс >= 6', callback_data="qset6"))
-    markup.add(telebot.types.InlineKeyboardButton(text='Сообщать когда Q-индекс >= 7', callback_data="qset7"))
-    markup.add(telebot.types.InlineKeyboardButton(text='Сообщать когда Q-индекс >= 8', callback_data="qset8"))
-    markup.add(telebot.types.InlineKeyboardButton(text='Сообщать когда Q-индекс >= 9', callback_data="qset9"))
+    markup.add(telebot.types.InlineKeyboardButton(text='Не получать уведомления', callback_data=0))
+    markup.add(telebot.types.InlineKeyboardButton(text='Сообщать когда Q-индекс >= 5', callback_data=5))
+    markup.add(telebot.types.InlineKeyboardButton(text='Сообщать когда Q-индекс >= 6', callback_data=6))
+    markup.add(telebot.types.InlineKeyboardButton(text='Сообщать когда Q-индекс >= 7', callback_data=7))
+    markup.add(telebot.types.InlineKeyboardButton(text='Сообщать когда Q-индекс >= 8', callback_data=8))
+    markup.add(telebot.types.InlineKeyboardButton(text='Сообщать когда Q-индекс >= 9', callback_data=9))
     markup.add(telebot.types.InlineKeyboardButton(text='About', callback_data="about"))
     return markup
 
@@ -76,7 +76,6 @@ def callback_worker(call):
     else:
         data = call.data
         id_write(id, data)
-
         bot.send_message(call.message.chat.id, 'Буду присылать уведомления, когда Q-индекс будет >=5. Cияние видно на широте 62° (г. Петрозаводск).')
 
 @bot.message_handler(content_types=['text'])
