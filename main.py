@@ -103,7 +103,7 @@ def AuroraPossible(joinedUsers):
 
 # уведомления
 def notifications(joinedUsers):
-    schedule.every(15).minutes.do(AuroraPossible, joinedUsers)
+    schedule.every(2).minutes.do(AuroraPossible, joinedUsers)
 
     while True:
         schedule.run_pending()
