@@ -1,8 +1,6 @@
 from get_image import getImage
 from get_q_index import getQ
 import os
-from PIL import Image
-import requests
 import telebot
 import threading
 import schedule

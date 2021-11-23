@@ -1,4 +1,5 @@
 from PIL import Image
+from get_image import getImage
 
 # функция возвращает значение Q-индекса
 def getQ():
