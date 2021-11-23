@@ -1,3 +1,5 @@
+from get_image import getImage
+from get_q_index import getQ
 import os
 from PIL import Image
 import requests
@@ -11,42 +13,6 @@ import psycopg2
 DB_URI = os.environ['DATABASE_URL']
 db_connection = psycopg2.connect(DB_URI, sslmode="require")
 db_object = db_connection.cursor()
-
-# функция парсит картинку, сохраняет её, обрезает и сохраняет снова под тем же именем
-def getImage():
-    url = 'https://www2.irf.se/maggraphs/preliminary_k_index_last_24.png'
-    # запись файла на диск
-    filename = 'Q-index.png'
-    r = requests.get(url, allow_redirects=True)
-    open(filename, 'wb').write(r.content)
-    im = Image.open('Q-index.png')
-    im.LOAD_TRUNCATED_IMAGES = True
-    im.crop((608, 8, 1206, 306)).save('Q-index.png')
-
-# функция возвращает значение Q-индекса
-def getQ():
-    getImage()
-
-    im = Image.open('Q-index.png')
-    im.LOAD_TRUNCATED_IMAGES = True
-    # шаг на графике 14 пикселей
-    # определяем значение Q-индекса
-    # координаты пикселя, если Q = 1
-    x = 577.5
-    y = 142
-    # шаг на графике
-    delta = 14
-
-    Q = 0
-    while Q <= 9:
-        r, g, b = im.getpixel((x, y))
-        sum = r+g+b
-        if sum > 649:
-            break
-        else:
-            y -= delta
-            Q += 1
-    return Q
 
 # клавиатура telegram вывел отдельно
 def keyboard():
