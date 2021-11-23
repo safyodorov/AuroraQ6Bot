@@ -76,7 +76,7 @@ def callback_worker(call):
     else:
         data = call.data
         id_write(id, data)
-        bot.send_message(call.message.chat.id, 'Буду присылать уведомления, когда Q-индекс будет >=5. Cияние видно на широте 62° (г. Петрозаводск).')
+        bot.send_message(call.message.chat.id, 'Буду присылать уведомления, когда Q-индекс будет >='+data+'. Cияние видно на широте 62° (г. Петрозаводск).')
 
 @bot.message_handler(content_types=['text'])
 
@@ -94,11 +94,11 @@ def get_text_messages(message):
 # функция проверяет значения индекса Q и присылает уведомления в зависимости от выбора пользователя
 def AuroraPossible(joinedUser5,joinedUser6, joinedUser7, joinedUser8, joinedUser9):
     Q = getQ()
-    if Q >= 5:
+    if Q >= 2:
         if joinedUser5:
             for user in joinedUser5:
                 bot.send_message(user, "Внимание значение Q велико, возможно Северное сияние. Q-индекс: "+str(Q))
-    elif Q >= 6:
+    elif Q >= 3:
         if joinedUser6:
             for user in joinedUser6:
                 bot.send_message(user, "Внимание значение Q велико, возможно Северное сияние. Q-индекс: "+str(Q))
