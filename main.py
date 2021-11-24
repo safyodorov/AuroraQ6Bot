@@ -92,7 +92,7 @@ def get_text_messages(message):
 
 # уведомления
 def notifications():
-    schedule.every(2).minutes.do(AuroraPossible, joinedUsers)
+    schedule.every(2).minutes.do(AuroraPossible)
     while True:
         schedule.run_pending()
         time.sleep(1)  # сейчас интервал 1 секунда
