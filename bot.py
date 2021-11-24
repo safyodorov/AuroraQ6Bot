@@ -87,3 +87,6 @@ def bot_auroraQI():
             markup = keyboard()
             bot.send_message(message.chat.id, "Напишите: ку ИЛИ график. ИЛИ нажмите на кнопку ", reply_markup=markup)
     bot.polling(none_stop=True)
+
+def send_message(user, text):
+    bot.send_message(user, text)

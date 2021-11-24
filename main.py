@@ -1,5 +1,5 @@
 from get_q_index import getQ
-from bot import bot_auroraQI
+from bot import bot_auroraQI, send_message
 import os
 import telebot
 import threading
@@ -16,12 +16,13 @@ def notifications():
 # функция проверяет значения индекса Q и присылает уведомления в зависимости от выбора пользователя
 def AuroraPossible():
     Q = getQ()
+    text = "Внимание значение Q велико, возможно Северное сияние. Q-индекс: "+str(Q)
     for i in range(5, 10):
-        if Q >= i-4:
+        if Q >= i-5:
             joinedUsers = get_users(i)
             if joinedUsers:
                 for user in joinedUsers:
-                    bot.send_message(user, "Внимание значение Q велико, возможно Северное сияние. Q-индекс: "+str(Q))
+                    send_message(user, text)
 
 if __name__ == '__main__':
     t1 = threading.Thread(target=bot_auroraQI)
