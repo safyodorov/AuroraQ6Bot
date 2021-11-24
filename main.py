@@ -1,5 +1,6 @@
 from get_q_index import getQ
 from bot import bot_auroraQI, send_message
+from psql import get_users
 import os
 import telebot
 import threading
