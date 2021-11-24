@@ -10,7 +10,7 @@ def get_users():
 # запрашиваю из базы данных список юзеров
     joinedUsers = []
     for i in range(5, 10):
-        db_object.execute(f"SELECT id FROM users WHERE qset = i")
+        db_object.execute(f"SELECT id FROM users WHERE qset = {i}")
         joinedUsers[i-4] = db_object.fetchone()
     return (joinedUsers)
 
