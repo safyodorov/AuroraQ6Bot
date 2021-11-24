@@ -6,13 +6,11 @@ DB_URI = os.environ['DATABASE_URL']
 db_connection = psycopg2.connect(DB_URI, sslmode="require")
 db_object = db_connection.cursor()
 
-def get_users():
-# запрашиваю из базы данных список юзеров
-    joinedUsers = [None, None, None, None, None]
-    for i in range(5, 10):
-        db_object.execute(f"SELECT id FROM users WHERE qset = {i}")
-        joinedUsers[i-5] = db_object.fetchone()
-    return (joinedUsers)
+# запрашиваю из базы данных список юзеров c определенным значением qset
+def get_users(i):
+    db_object.execute(f"SELECT id FROM users WHERE qset = {i}")
+    joinedUsers = db_object.fetchone()
+    return joinedUsers
 
 def id_check(id, username):
     db_object.execute(f"SELECT id FROM users WHERE id = {id}")
