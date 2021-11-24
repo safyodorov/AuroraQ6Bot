@@ -92,22 +92,22 @@ def get_text_messages(message):
         markup = keyboard()
         bot.send_message(message.chat.id, "Напишите: ку ИЛИ график. ИЛИ нажмите на кнопку ", reply_markup=markup)
 
-# функция проверяет значения индекса Q и присылает уведомления в зависимости от выбора пользователя
-def AuroraPossible(joinedUsers):
-    Q = getQ()
-    for i in range(1, 6):
-        if Q >= i+1:
-            if joinedUsers[i-1]:
-                for user in joinedUsers[i-1]:
-                    bot.send_message(user, "Внимание значение Q велико, возможно Северное сияние. Q-индекс: "+str(Q))
-
 # уведомления
 def notifications(joinedUsers):
-    schedule.every(2).minutes.do(AuroraPossible, joinedUsers)
+    schedule.every(15).minutes.do(AuroraPossible, joinedUsers)
 
     while True:
         schedule.run_pending()
         time.sleep(1)  # сейчас интервал 1 секунда
+
+# функция проверяет значения индекса Q и присылает уведомления в зависимости от выбора пользователя
+def AuroraPossible(joinedUsers):
+    Q = getQ()
+    for i in range(1, 6):
+        if Q >= i+4:
+            if joinedUsers[i-1]:
+                for user in joinedUsers[i-1]:
+                    bot.send_message(user, "Внимание значение Q велико, возможно Северное сияние. Q-индекс: "+str(Q))
 
 if __name__ == '__main__':
     t1 = threading.Thread(target=bot.polling)
