@@ -97,8 +97,8 @@ def AuroraPossible(joinedUsers):
     Q = getQ()
     for i in range(1, 6):
         if Q >= i+1:
-            if joinedUsers[i]:
-                for user in joinedUsers[i]:
+            if joinedUsers[i-1]:
+                for user in joinedUsers[i-1]:
                     bot.send_message(user, "Внимание значение Q велико, возможно Северное сияние. Q-индекс: "+str(Q))
 
 # уведомления
