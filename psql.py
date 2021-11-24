@@ -11,7 +11,7 @@ def get_users():
     joinedUsers = [None, None, None, None, None]
     for i in range(5, 10):
         db_object.execute(f"SELECT id FROM users WHERE qset = {i}")
-        joinedUsers[i-4] = db_object.fetchone()
+        joinedUsers[i-5] = db_object.fetchone()
     return (joinedUsers)
 
 def id_check(id, username):
