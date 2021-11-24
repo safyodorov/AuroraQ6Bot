@@ -9,7 +9,7 @@ import time
 
 # уведомления
 def notifications():
-    schedule.every(2).minutes.do(AuroraPossible)
+    schedule.every(15).minutes.do(AuroraPossible)
     while True:
         schedule.run_pending()
         time.sleep(1)  # сейчас интервал 1 секунда
@@ -19,7 +19,7 @@ def AuroraPossible():
     Q = getQ()
     text = "Внимание значение Q велико, возможно Северное сияние. Q-индекс: "+str(Q)
     for i in range(5, 10):
-        if Q >= i-5:
+        if Q >= i:
             joinedUsers = get_users(i)
             if joinedUsers:
                 for user in joinedUsers:
