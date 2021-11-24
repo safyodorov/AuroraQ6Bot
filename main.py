@@ -34,8 +34,6 @@ def keyboardnotes():
 BOT_TOKEN = os.environ["BOT_TOKEN"]
 bot = telebot.TeleBot(BOT_TOKEN)
 
-joinedUsers = get_users()
-
 @bot.message_handler(commands=['start'])
 def start(message):
     id = message.chat.id
