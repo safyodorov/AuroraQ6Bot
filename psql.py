@@ -8,7 +8,7 @@ db_object = db_connection.cursor()
 
 def get_users():
 # запрашиваю из базы данных список юзеров
-    joinedUsers = []
+    joinedUsers = [None, None, None, None, None]
     for i in range(5, 10):
         db_object.execute(f"SELECT id FROM users WHERE qset = {i}")
         joinedUsers[i-4] = db_object.fetchone()
